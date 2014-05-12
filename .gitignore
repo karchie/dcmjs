@@ -3,6 +3,9 @@
 # except for .gitignore
 !.gitignore
 
+# Ignore Emacs backups
+*~
+
 # Exclude QtCreator files ...
 CMakeLists.txt.user*
 
