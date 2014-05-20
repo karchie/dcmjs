@@ -40,7 +40,7 @@ configure_file(
   ${CMAKE_BINARY_DIR}/src/dcmjs_app_config.h
   )
 
-add_executable(${PROJECT_NAME} ${PROJECT_NAME}.cpp)
+add_executable(${PROJECT_NAME} ${PROJECT_NAME}.cpp dcmedit.cpp)
 target_link_libraries(${PROJECT_NAME} ${DCMTK_APPLICATIONS})
 
 if(DCMJS_PREJS_SCRIPT)
