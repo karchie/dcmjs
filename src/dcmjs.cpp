@@ -196,6 +196,7 @@
 #ifdef DCMJS_APP_dsr2html
 #include <dcmtk/config/dsr2html_app.h>
 #endif
+#include "dcmedit.h"		// NRG DICOM anonymizer
 
 //-----------------------------------------------------------------------------
 void display_help(const char* prog_name)
@@ -405,6 +406,7 @@ void display_list()
   #ifdef DCMJS_APP_dsr2html
   std::cout << "dsr2html" << std::endl;
   #endif
+  std::cout << "dcmedit" << std::endl;
 }
 
 //-----------------------------------------------------------------------------
@@ -997,6 +999,11 @@ int main(int argc, char* argv[])
     std::cerr << "dsr2html not available ! " << std::endl;
   #endif
     }
+
+  else if (strcmp(app_name, "dcmedit") == 0) {
+    return dcmedit_main(app_argc, app_argv);
+  }
+
   else 
     {
     std::cerr << "Unknown application name !" << std::endl;
