@@ -293,7 +293,7 @@ dcmedit_main(const int argc, char * const argv[]) {
 
   std::cout << "output cardinality " << dataset->card() << std::endl;
 
-  dataset->saveFile(argv[2]);
+  dcmf.saveFile(argv[2]);
 
   return 0;
 }
