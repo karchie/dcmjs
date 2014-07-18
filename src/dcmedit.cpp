@@ -215,6 +215,7 @@ dcmedit_main(const int argc, char * const argv[]) {
   dataset->remove(DcmTagKey(0x0018,0x1030)); // Protocol Name
   dataset->remove(DcmTagKey(0x0040,0x2001)); // Reason for Imaging Service Request
   dataset->remove(DcmTagKey(0x0032,0x1030)); // Reason for Study
+  dataset->remove(DcmTagKey(0x0008,0x1250)); // Related Series Sequence
   dataset->remove(DcmTagKey(0x0400,0x0402)); // Referenced Digital Signature Sequence
   dataset->remove(DcmTagKey(0x3006,0x0024)); // Referenced Frame of Reference UID
   dataset->remove(DcmTagKey(0x0040,0x4023)); // Referenced General Purpose Scheduled Procedure Step Transaction UID
@@ -264,7 +265,6 @@ dcmedit_main(const int argc, char * const argv[]) {
   dataset->remove(DcmTagKey(0x0032,0x1021)); // Scheduled Study Location AE Title
   dataset->remove(DcmTagKey(0x0008,0x0021)); // Series Date
   dataset->remove(DcmTagKey(0x0008,0x103E)); // Series Description
-  dataset->remove(DcmTagKey(0x0020,0x000E)); // Series Instance UID
   dataset->remove(DcmTagKey(0x0008,0x0031)); // Series Time
   dataset->remove(DcmTagKey(0x0038,0x0062)); // Service Episode Description
   dataset->remove(DcmTagKey(0x0038,0x0060)); // Service Episode ID
