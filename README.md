@@ -7,7 +7,7 @@ Overview
 dcmjs is a javascript cross-compilation of dcmtk (dcmtk.org) for use
 in a javascript environment.  Uses emscripten.
 
-                      http://www.dcmjs.org
+See                  [http://www.dcmjs.org](http://www.dcmjs.org)
 
 See License.txt for information on using and contributing.
 
@@ -75,6 +75,10 @@ When done, you will have the files `dcmjs.js` and `dcmjs.js.gz` in the `dcmjs-bu
 $ ls dcmjs-build/bin/
 dcmjs.js  dcmjs.js.gz
 ```
+
+Caveats
+-------
+The DCMTK build may find your system headers, so it's best not to have DCMTK installed on your build machine.  See https://github.com/commontk/dcmjs/issues/8.
 
 Add / Remove applications
 -------------------------
