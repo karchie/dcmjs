@@ -43,12 +43,23 @@ endif()
 
 # If not found by above search, locate using the EMSCRIPTEN environment variable.
 if ("${EMSCRIPTEN_ROOT_PATH}" STREQUAL "")
-	set(EMSCRIPTEN_ROOT_PATH "$ENV{EMSCRIPTEN}")
+  set(EMSCRIPTEN_ROOT_PATH "$ENV{EMSCRIPTEN}")
 endif()
 
 # Abort if not found. 
 if ("${EMSCRIPTEN_ROOT_PATH}" STREQUAL "")
-	message(FATAL_ERROR "Could not locate the Emscripten compiler toolchain directory! Either set the EMSCRIPTEN environment variable, or pass -DEMSCRIPTEN_ROOT_PATH=xxx to CMake to explicitly specify the location of the compiler!")
+  message(FATAL_ERROR "Could not locate the Emscripten compiler toolchain directory! Either set the EMSCRIPTEN environment variable, or pass -DEMSCRIPTEN_ROOT_PATH=xxx to CMake to explicitly specify the location of the compiler!")
+endif()
+
+# Check version
+set(EMSCRIPTEN_REQUIRED_VERSION 1.21.4)
+if(EXISTS ${EMSCRIPTEN_ROOT_PATH}/emscripten-version.txt)
+  file(READ ${EMSCRIPTEN_ROOT_PATH}/emscripten-version.txt EMSCRIPTEN_VERSION)
+  string(STRIP ${EMSCRIPTEN_VERSION} EMSCRIPTEN_VERSION)
+  message(STATUS "Found Emscripten ${EMSCRIPTEN_VERSION}")
+  if(EMSCRIPTEN_VERSION VERSION_LESS ${EMSCRIPTEN_REQUIRED_VERSION})
+    message(FATAL_ERROR "Emscripten >= ${EMSCRIPTEN_REQUIRED_VERSION} is required.")
+  endif()
 endif()
 
 #------------------------------------------------------------------------------
@@ -56,13 +67,13 @@ endif()
 #------------------------------------------------------------------------------
 set(CMAKE_C_COMPILER "${EMSCRIPTEN_ROOT_PATH}/emcc")
 set(CMAKE_CXX_COMPILER "${EMSCRIPTEN_ROOT_PATH}/em++")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-warn-absolute-paths -s ALLOW_MEMORY_GROWTH=1")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-warn-absolute-paths -s ALLOW_MEMORY_GROWTH=1")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-warn-absolute-paths -s ALLOW_MEMORY_GROWTH=1 -s ASSERTIONS=1 --memory-init-file 0")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-warn-absolute-paths -s ALLOW_MEMORY_GROWTH=1 -s ASSERTIONS=1 --memory-init-file 0")
 
 # Emscripten toolchain options
 set(EMSCRIPTEN_TOOLCHAIN_OPTIONS
   -DCMAKE_MODULE_PATH:PATH=${EMSCRIPTEN_ROOT_PATH}/cmake/Modules
-  -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${EMSCRIPTEN_ROOT_PATH}/cmake/Platform/Emscripten.cmake
+  -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${EMSCRIPTEN_ROOT_PATH}/cmake/Modules/Platform/Emscripten.cmake
   -DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}
   -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}
   -DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}
